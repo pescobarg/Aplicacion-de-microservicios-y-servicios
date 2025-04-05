@@ -1,0 +1,1 @@
+Esta aplicacion implementa un backend que permita a pacientes agendar citas en clinicas con doctores de manera fácil y rápida a sus servicios y medicamentos. La aplicacion fue implementada con 2 arquitecturas: Microservicios (Quarkus) y servicios (Open Liberty)
