@@ -1,0 +1,73 @@
+version: '3.9'
+
+services:
+  s-personas:
+    build:
+      context: ./s-personas
+    container_name: s-personas
+    ports:
+      - "9080:9080"
+      - "9443:9443"
+    depends_on:
+      - db-personas
+    environment:
+      - DB_HOST=db-personas
+      - DB_PORT=5432
+      - DB_NAME=personasdb
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+    networks:
+      - backend
+
+  db-personas:
+    image: postgres:15
+    container_name: db-personas
+    environment:
+      POSTGRES_DB: personasdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - personas-data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  s-recursos:
+    build:
+      context: ./s-recursos
+    container_name: s-recursos
+    ports:
+      - "9081:9081"
+      - "9444:9444"
+    depends_on:
+      - db-recursos
+    environment:
+      - DB_HOST=db-recursos
+      - DB_PORT=5432
+      - DB_NAME=recursosdb
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+    networks:
+      - backend
+
+  db-recursos:
+    image: postgres:15
+    container_name: db-recursos
+    environment:
+      POSTGRES_DB: recursosdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5434:5432"
+    volumes:
+      - recursos-data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+volumes:
+  personas-data:
+  recursos-data:
+
+networks:
+  backend:

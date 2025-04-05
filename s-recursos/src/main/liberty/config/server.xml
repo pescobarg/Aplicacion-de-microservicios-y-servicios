@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="Servidor de Recursos">
+
+    <!-- Enable features -->
+    <featureManager>
+        <feature>jakartaee-10.0</feature>
+        <feature>microProfile-7.0</feature>
+        <feature>jdbc-4.2</feature>
+        <feature>jndi-1.0</feature>
+    </featureManager>
+
+    <!-- Configuración de base de datos PostgreSQL para s-recursos -->
+    <dataSource jndiName="jdbc/RecursosDB" type="javax.sql.DataSource">
+        <jdbcDriver libraryRef="PostgreSQLLib"/>
+        <properties 
+            databaseName="recursosdb"
+            user="postgres"
+            password="postgres"
+            serverName="db-recursos"
+            portNumber="5432"/>
+    </dataSource>
+
+    <library id="PostgreSQLLib">
+        <file name="/opt/libs/postgresql-42.7.3.jar"/>
+    </library>
+
+    <!-- Seguridad básica -->
+    <basicRegistry id="basic" realm="BasicRealm" />
+
+    <!-- Endpoint HTTP -->
+    <httpEndpoint id="defaultHttpEndpoint"
+                  httpPort="9081"
+                  httpsPort="9444" />
+
+    <!-- Expandir aplicaciones automáticamente -->
+    <applicationManager autoExpand="true"/>
+
+    <!-- Aplicación desplegada -->
+    <webApplication contextRoot="/s-recursos" location="s-recursos.war" />
+
+    <!-- Config SSL -->
+    <ssl id="defaultSSLConfig" trustDefaultCerts="true" />
+
+</server>

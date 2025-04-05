@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="new server">
+
+    <!-- Enable features -->
+    <featureManager>
+        <feature>jakartaee-10.0</feature>
+        <feature>microProfile-7.0</feature>
+        <feature>jdbc-4.2</feature>
+        <feature>jndi-1.0</feature>
+    </featureManager>
+
+    <!-- Configuración de base de datos PostgreSQL -->
+    <dataSource jndiName="jdbc/PersonasDB" type="javax.sql.DataSource">
+        <jdbcDriver libraryRef="PostgreSQLLib"/>
+        <properties databaseName="personasdb" user="admin" password="adminpass" serverName="localhost" portNumber="5432"/>
+    </dataSource>
+
+    <library id="PostgreSQLLib">
+        <file name="/opt/libs/postgresql-42.7.3.jar"/>
+    </library>
+
+    <!-- Seguridad básica -->
+    <basicRegistry id="basic" realm="BasicRealm">
+        <!-- <user name="yourUserName" password="" /> -->
+    </basicRegistry>
+
+    <!-- Endpoint HTTP -->
+    <httpEndpoint id="defaultHttpEndpoint"
+                  httpPort="9080"
+                  httpsPort="9443" />
+
+    <!-- Expandir aplicaciones automáticamente -->
+    <applicationManager autoExpand="true"/>
+
+    <!-- Aplicación desplegada -->
+    <webApplication contextRoot="/s-personas" location="s-personas.war" />
+
+    <!-- Config SSL -->
+    <ssl id="defaultSSLConfig" trustDefaultCerts="true" />
+
+</server>
